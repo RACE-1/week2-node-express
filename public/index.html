@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Week 2 API</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 3rem auto; padding: 0 1rem; line-height: 1.5; }
+    h1 { color: #c00; }
+    code { background: #f2f2f2; padding: 2px 6px; border-radius: 4px; }
+    form { display: grid; gap: .5rem; margin-top: 1rem; }
+    input, button { padding: .5rem; font-size: 1rem; }
+    #result { margin-top: 1rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>My Week 2 API!</h1>
+  <p>Endpoints:</p>
+  <ul>
+    <li><code>GET /api</code> – welcome message</li>
+    <li><code>POST /user</code> – send <code>{name, email}</code></li>
+    <li><code>GET /user/:id</code> – user profile</li>
+  </ul>
+
+  <h2>Try POST /user</h2>
+  <form id="userForm">
+    <input id="name" placeholder="Name" />
+    <input id="email" type="email" placeholder="Email" />
+    <button type="submit">Send</button>
+  </form>
+  <p id="result"></p>
+
+  <script>
+    document.getElementById('userForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch('/user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value
+        })
+      });
+      document.getElementById('result').textContent = await res.text();
+    });
+  </script>
+</body>
+</html>
